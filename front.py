@@ -22,6 +22,10 @@ def update():
         e5.insert(END, selected_row[5])
         e6.delete(0, END)
         e6.insert(END, selected_row[6])
+        e7.delete(0, END)
+        e7.insert(END, selected_row[7])
+        e8.delete(0, END)
+        e8.insert(END, selected_row[8])
 
     def deletelist():
         back.delete(selected_row[0])
@@ -30,78 +34,90 @@ def update():
         list.delete(0, END)
         for datas in back.view():
             list.insert(END, datas)
-
+        print("print in front: ",datas)
     def searchlist():
         list.delete(0, END)
-        for i in back.search(date_text.get(), Earnings_text.get(), exercise_text.get(), study_text.get(), diet_text.get(), python_text.get()):
+        for i in back.search(Lname.get(), Sname.get(), Mname.get(), Bday.get(), Sex.get(), age.get(), loc.get(), contact.get()):
             list.insert(END, i)
 
     def addlist():
-        back.insert(date_text.get(), Earnings_text.get(), exercise_text.get(
-        ), study_text.get(), diet_text.get(), python_text.get())
+        back.insert(Lname.get(), Sname.get(), Mname.get(
+        ), Bday.get(), Sex.get(), age.get(), loc.get(), contact.get())
 
         list.delete(0, END)
-        list.insert(END, (date_text.get(), Earnings_text.get(), exercise_text.get(
-        ), study_text.get(), diet_text.get(), python_text.get()))
+        list.insert(END, (Lname.get(), Sname.get(), Mname.get(
+        ), Bday.get(), Sex.get(), age.get(), loc.get(), contact.get()))
 
     views = Toplevel(win)
     views.title("LIST OF STUDENTS")
-    l1 = Label(views, text="Date")
+    l1 = Label(views, text="Last Name")
     l1.grid(row=0, column=0)
-    l2 = Label(views, text="Earnings")
+    l2 = Label(views, text="Sure name")
     l2.grid(row=0, column=2)
-    l3 = Label(views, text="Exercise")
+    l3 = Label(views, text="M. name")
     l3.grid(row=1, column=0)
-    l4 = Label(views, text="Study")
+    l4 = Label(views, text="Birth date")
     l4.grid(row=1, column=2)
-    l5 = Label(views, text="Diet")
+    l5 = Label(views, text="Sex")
     l5.grid(row=2, column=0)
-    l6 = Label(views, text="Python")
+    l6 = Label(views, text="Age")
     l6.grid(row=2, column=2)
+    l7 = Label(views, text="Address")
+    l7.grid(row=3, column=0)
+    l8 = Label(views, text="Contact")
+    l8.grid(row=3, column=2)
 
-    date_text = StringVar()
-    e1 = Entry(views, textvariable=date_text)
+    Lname = StringVar()
+    e1 = Entry(views, textvariable=Lname)
     e1.grid(row=0, column=1)
 
-    Earnings_text = StringVar()
-    e2 = Entry(views, textvariable=Earnings_text)
+    Sname = StringVar()
+    e2 = Entry(views, textvariable=Sname)
     e2.grid(row=0, column=3)
 
-    exercise_text = StringVar()
-    e3 = Entry(views, textvariable=exercise_text)
+    Mname = StringVar()
+    e3 = Entry(views, textvariable=Mname)
     e3.grid(row=1, column=1)
 
-    study_text = StringVar()
-    e4 = Entry(views, textvariable=study_text)
+    Bday = StringVar()
+    e4 = Entry(views, textvariable=Bday)
     e4.grid(row=1, column=3)
 
-    diet_text = StringVar()
-    e5 = Entry(views, textvariable=diet_text)
+    Sex = StringVar()
+    e5 = Entry(views, textvariable=Sex)
     e5.grid(row=2, column=1)
 
-    python_text = StringVar()
-    e6 = Entry(views, textvariable=python_text)
+    age = StringVar()
+    e6 = Entry(views, textvariable=age)
     e6.grid(row=2, column=3)
 
-    list = Listbox(views, height=8, width=35)
-    list.grid(row=3, column=0, rowspan=9, columnspan=2)
+    loc = StringVar()
+    e7 = Entry(views, textvariable=loc)
+    e7.grid(row=3, column=1)
+
+    contact = StringVar()
+    e8 = Entry(views, textvariable=contact)
+    e8.grid(row=3, column=3)
+
+    list = Listbox(views, height=8, width=60)
+    list.grid(row=4, column=0, rowspan=9, columnspan=3)
 
     sb = Scrollbar(views)
-    sb.grid(row=3, column=2, rowspan=9)
+    # sb.grid(row=4, column=3, rowspan=9)
 
     list.bind('<<ListboxSelect>>', get_selected_row)
 
     b2 = Button(views, text='Search', width=10, pady=10, command=searchlist)
-    b2.grid(row=3, column=3)
+    b2.grid(row=4, column=3)
 
     b3 = Button(views, text='Delete', width=10, pady=10, command=deletelist)
-    b3.grid(row=4, column=3)
+    b3.grid(row=5, column=3)
 
     b4 = Button(views, text='View all', width=10, pady=10, command=viewList)
-    b4.grid(row=5, column=3)
+    b4.grid(row=4, column=4)
 
     b5 = Button(views, text='Close', width=10, pady=10, command=views.destroy)
-    b5.grid(row=7, column=3)
+    b5.grid(row=5, column=4)
 
 
 def show():
@@ -109,7 +125,7 @@ def show():
     views.title("LIST OF STUDENTS")
 
     tree = ttk.Treeview(views, column=(
-        "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"), show='headings')
+        "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9"), show='headings')
 
     for row in back.view():
         tree.insert("", END, values=row)
@@ -127,9 +143,11 @@ def show():
     tree.column("#6", anchor=CENTER)
     tree.heading("#6", text="Sex")
     tree.column("#7", anchor=CENTER)
-    tree.heading("#7", text="Address")
+    tree.heading("#7", text="Age")
     tree.column("#8", anchor=CENTER)
-    tree.heading("#8", text="Contact")
+    tree.heading("#8", text="Address")
+    tree.column("#9", anchor=CENTER)
+    tree.heading("#9", text="Contact")
     tree.pack()
 
 
